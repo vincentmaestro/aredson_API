@@ -43,7 +43,7 @@ user.post('/', async (req, res) => {
 
     user = new User({
         name: req.body.name,
-        email: req.body.user,
+        email: req.body.email,
         phone: req.body.phone,
         location: {
             country: req.body.country,
