@@ -10,7 +10,7 @@ function validateUser(input) {
         phone: Joi.string().min(10).max(15).required(),
         country: Joi.string().min(3).max(20).required(),
         city: Joi.string().min(3).max(20).required(),
-        priceRange: Joi.string().min(2).max(10).required(),
+        priceRange: Joi.string().min(2).max(11).required(),
         motivation: Joi.string().min(5).max(30).required()
     });
 
