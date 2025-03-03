@@ -60,7 +60,7 @@ user.post('/', cors({ methods: 'POST' }), async (req, res) => {
     return res.status(201).send( {message: 'Request has been submitted and will be reviewed. \n You will receive an email if your application was approved.' });
 });
 
-user.put('/completeregistration', async (req, res) => {
+user.put('/completeregistration', cors({ methods: 'POST' }), async (req, res) => {
     const { error } = validateSignin(req.body);
     if(error) return res.status(400).send({ message: error.details[0].message });
 
@@ -83,7 +83,7 @@ user.put('/completeregistration', async (req, res) => {
 
     const refreshToken = user.generateRefreshToken();
     await user.save();
-    res.cookie('refT', refreshToken, { httpOnly: true, maxAge: 2678400000, secure: true });
+    res.cookie('refT', refreshToken, { httpOnly: true, secure: true, sameSite: 'none', maxAge: 2678400000 });
 
     const token = user.generateAuthToken();
     return res.header('x-auth-token', token).send(_.omit(user.toObject(), ['_id', '__v', 'createdAt', 'isDisabled', 'password', 'refreshTokens']));

@@ -24,7 +24,7 @@ authentication.post('/', async (req, res) => {
 
     const refreshToken = user.generateRefreshToken();
     await user.save();
-    res.cookie('refT', refreshToken, { httpOnly: true, maxAge: 2678400000, secure: true });
+    res.cookie('refT', refreshToken, { httpOnly: true, secure: true, sameSite: 'none', maxAge: 2678400000 });
     
     const token = user.generateAuthToken();
     return res.header('x-auth-token', token).send(_.omit(user.toObject(), ['_id', '__v', 'createdAt', 'isDisabled', 'password', 'refreshTokens']));
