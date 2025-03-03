@@ -8,7 +8,7 @@ export default async function(req, res, next) {
     if(!refreshToken) return res.status(401).send({ message: 'no token provided. re-authenticate' });
 
     try {
-        const payload = jwt.verify(refreshToken, 'aredson_refresh_token');
+        const payload = jwt.verify(refreshToken, process.env.AREDSON_REFRESH_TOKEN);
         const { id } = payload;
         const user = await User.findById(id);
 

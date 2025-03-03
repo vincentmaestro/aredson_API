@@ -7,7 +7,7 @@ export default function(req, res, next) {
         const authToken = req.header('x-auth-token');
         if(!authToken) return refreshToken(req, res, next);
     
-        const user = jwt.verify(authToken, 'aredson_auth_token');
+        const user = jwt.verify(authToken, process.env.AREDSON_AUTH_TOKEN);
         req.user = user;
     
         next();
