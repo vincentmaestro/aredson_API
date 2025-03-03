@@ -1,0 +1,20 @@
+import 'express-async-errors';
+import express from 'express';
+import cors from 'cors';
+import cookieParser from 'cookie-parser';
+import connectToDb from '../db/db.js';
+import user from '../routes/user.js';
+import { authentication } from '../routes/authentication.js';
+
+const app = express();
+app.listen('3000', () => console.log('app started'));
+connectToDb();
+
+app.use(express.json());
+app.use(cookieParser());
+app.use(cors({ origin: 'https://aredson.vercel.app', exposedHeaders: ['x-auth-token'], credentials: true }));
+app.use('/api/user', user);
+app.use('/api/auth', authentication);
+app.use((ex, req, res) => {
+    return res.status(500).send({ message: ex.message });
+});
