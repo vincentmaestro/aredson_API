@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import _ from 'lodash';
 import bcrypt from 'bcryptjs';
 import { User, validateUser } from '../models/user.js';
@@ -34,7 +35,7 @@ user.get('/me', authorization, async (req, res) => {
 
 user.post('/logout', logout);
 
-user.post('/', async (req, res) => {
+user.post('/', cors({ origin: 'https://aredson.vercel.app/register', methods: 'POST' }), async (req, res) => {
     const { error } = validateUser(req.body);
     if (error) return res.status(400).send({ message: error.details[0].message });
 
