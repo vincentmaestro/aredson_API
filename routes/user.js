@@ -35,7 +35,7 @@ user.get('/me', authorization, async (req, res) => {
 
 user.post('/logout', logout);
 
-user.post('/', cors({ origin: 'https://aredson.vercel.app/register', methods: 'POST' }), async (req, res) => {
+user.post('/', cors({ methods: 'POST' }), async (req, res) => {
     const { error } = validateUser(req.body);
     if (error) return res.status(400).send({ message: error.details[0].message });
 
