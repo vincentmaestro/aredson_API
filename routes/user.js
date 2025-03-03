@@ -43,7 +43,7 @@ user.post('/', async (req, res) => {
 
     user = new User({
         name: req.body.name,
-        email: req.body.email,
+        email: req.body.user,
         phone: req.body.phone,
         location: {
             country: req.body.country,
@@ -56,7 +56,7 @@ user.post('/', async (req, res) => {
     });
     await user.save();
 
-    return res.status(201).send( {message: 'Request has been submitted and will be reviewed. \n You will receive an email if approved.' });
+    return res.status(201).send( {message: 'Request has been submitted and will be reviewed. \n You will receive an email if your application was approved.' });
 });
 
 user.put('/completeregistration', async (req, res) => {
