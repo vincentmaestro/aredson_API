@@ -10,6 +10,8 @@ const app = express();
 app.listen('3000', () => console.log('app started'));
 connectToDb();
 
+app.get("/", (req, res) => res.send("\\{^_^}/ hi!"));
+
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({ origin: 'https://aredson.vercel.app', exposedHeaders: ['x-auth-token'], credentials: true }));
