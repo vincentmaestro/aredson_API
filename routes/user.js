@@ -63,7 +63,7 @@ user.post('/', cors({ methods: 'POST' }), async (req, res) => {
     return res.status(201).send( {message: 'Request has been submitted and will be reviewed. \n You will receive an email if your application was approved.' });
 });
 
-user.put('/completeregistration', cors({ methods: 'PUT' }), async (req, res) => {
+user.put('/completeregistration', async (req, res) => {
     const { error } = validateSignin(req.body);
     if(error) return res.status(400).send({ message: error.details[0].message });
 
