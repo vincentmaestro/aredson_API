@@ -12,7 +12,10 @@ import logout from '../middlewares/logout.js';
 const user = express.Router();
 
 user.get('/', [authorization, admin], async (req, res) => {
-    const users = await User.find().select('-__v -bookings -isAdmin -location -username -password -refreshTokens').sort('name');
+    const request = await User.find()
+                    .select('-__v -bookings -location -username -password -refreshTokens')
+                    .sort('name');
+    const users = request.filter(user => user.isAdmin == false);
     return res.send(users);
 });
 
