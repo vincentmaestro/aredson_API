@@ -100,7 +100,7 @@ const userSchema = new mongoose.Schema({
 });
 
 userSchema.methods.generateAuthToken = function() {
-   return jwt.sign({ id: this._id }, process.env.AREDSON_AUTH_TOKEN, { expiresIn: '7d' });
+   return jwt.sign({ id: this._id }, process.env.AREDSON_AUTH_TOKEN, { expiresIn: '1h' });
 }
 userSchema.methods.generateRefreshToken = function() {
     const refreshToken = jwt.sign({ id: this._id }, process.env.AREDSON_REFRESH_TOKEN, { expiresIn: '30d' });

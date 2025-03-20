@@ -5,7 +5,7 @@ import { User } from "../models/user.js";
 
 export default async function(req, res, next) {
     const refreshToken = req.cookies['refT'];
-    if(!refreshToken) return res.status(401).send({ message: 'no token provided. re-authenticate' });
+    if(!refreshToken) return res.status(403).send({ message: 'no token provided' });
 
     try {
         const payload = jwt.verify(refreshToken, process.env.AREDSON_REFRESH_TOKEN);
@@ -22,15 +22,15 @@ export default async function(req, res, next) {
         next();
     }
     catch(ex) {
-        const user = await User.findById(id);
+        const payload = jwt.decode(refreshToken);
+        const userId = payload.id;
+        const user = await User.findById(userId);
 
         switch(ex.message) {
             case 'jwt expired': {
+                const validRefreshTokens = user.refreshTokens.filter(x => x !== refreshToken);
+                user.refreshTokens = validRefreshTokens;
                 res.clearCookie('refT');
-
-                const revokedToken = user.refreshTokens.find(x => x == refreshToken);
-                const refreshTokens = user.refreshTokens.filter(x => x !== revokedToken);
-                user.refreshTokens = refreshTokens;
                 await user.save();
 
                 return res.status(401).send({ message: 'token expired, re-authenticate' });
