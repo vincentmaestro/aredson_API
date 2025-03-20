@@ -1,5 +1,4 @@
 import express from 'express';
-import cors from 'cors';
 import _ from 'lodash';
 import bcrypt from 'bcryptjs';
 import { User, validateUser } from '../models/user.js';
@@ -28,7 +27,7 @@ user.get('/getuser/:id', [authorization, admin], async (req, res) => {
     res.send(_.omit(requestedUser.toObject(), ['__v', '_id', 'refreshTokens', 'password']));
 });
 
-user.get('/me', [cors({ origin: 'https://aredson.vercel.app', methods: 'GET', allowedHeaders: ['x-auth-token'], exposedHeaders: ['x-auth-token'], credentials: true }), authorization], async (req, res) => {
+user.get('/me', authorization, async (req, res) => {
     const id = req.user.id;
     const user = await User.findById(id);
 
@@ -36,9 +35,9 @@ user.get('/me', [cors({ origin: 'https://aredson.vercel.app', methods: 'GET', al
     return res.header('x-auth-token', token).send(_.omit(user.toObject(), ['_id', '__v', 'createdAt', 'isDisabled', 'password', 'refreshTokens']));
 });
 
-user.post('/logout', cors({ origin: 'https://aredson.vercel.app', methods: 'post', credentials: true }), logout);
+user.post('/logout', logout);
 
-user.post('/', cors({ origin: 'https://aredson.vercel.app', methods: 'post', allowedHeaders: 'Content-Type' }), async (req, res) => {
+user.post('/', async (req, res) => {
     const { error } = validateUser(req.body);
     if (error) return res.status(400).send({ message: error.details[0].message });
 
@@ -63,7 +62,7 @@ user.post('/', cors({ origin: 'https://aredson.vercel.app', methods: 'post', all
     return res.status(201).send( {message: 'Request has been submitted and will be reviewed. \n You will receive an email if your application was approved.' });
 });
 
-user.put('/completeregistration', cors({ origin: 'https://aredson.vercel.app', methods: 'put', allowedHeaders: 'Content-Type', credentials: true }), async (req, res) => {
+user.put('/completeregistration', async (req, res) => {
     const { error } = validateSignin(req.body);
     if(error) return res.status(400).send({ message: error.details[0].message });
 

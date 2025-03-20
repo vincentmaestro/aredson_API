@@ -1,4 +1,3 @@
-import cors from 'cors';
 import Joi from 'joi';
 import express from 'express';
 import bcrypt from 'bcryptjs';
@@ -7,7 +6,7 @@ import { User } from '../models/user.js';
 
 const authentication = express.Router();
 
-authentication.post('/', cors({ origin: 'https://aredson.vercel.app', methods: 'post', allowedHeaders: 'Content-Type', exposedHeaders: ['x-auth-token'], credentials: true }), async (req, res) => {
+authentication.post('/', async (req, res) => {
     const { error } = validateSignin(req.body);
     if(error) return res.status(400).send({ message: error.details[0].message });
 
