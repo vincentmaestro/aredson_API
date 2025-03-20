@@ -1,6 +1,5 @@
 import 'express-async-errors';
 import express from 'express';
-import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import connectToDb from '../db/db.js';
 import user from '../routes/user.js';
@@ -14,7 +13,6 @@ app.get("/", (req, res) => res.send("\\{^_^}/ hi!"));
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({ origin: 'https://aredson.vercel.app' }));
 app.use('/api/user', user);
 app.use('/api/auth', authentication);
 app.use((ex, req, res) => {

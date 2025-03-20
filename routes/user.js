@@ -28,7 +28,7 @@ user.get('/getuser/:id', [authorization, admin], async (req, res) => {
     res.send(_.omit(requestedUser.toObject(), ['__v', '_id', 'refreshTokens', 'password']));
 });
 
-user.get('/me', [cors({ origin: 'https://aredson.vercel.app', exposedHeaders: ['x-auth-token'], credentials: true }), authorization], async (req, res) => {
+user.get('/me', [cors({ origin: 'https://aredson.vercel.app', methods: 'GET', exposedHeaders: ['x-auth-token'], credentials: true }), authorization], async (req, res) => {
     const id = req.user.id;
     const user = await User.findById(id);
 
