@@ -14,7 +14,7 @@ app.get("/", (req, res) => res.send("\\{^_^}/ hi!"));
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({ origin: 'https://aredson.vercel.app', allowedHeaders: ['Content-Type', 'x-auth-token'], exposedHeaders: ['x-auth-token'], credentials: true }));
+app.use(cors({ origin: 'https://aredson.com', allowedHeaders: ['Content-Type', 'x-auth-token'], exposedHeaders: ['x-auth-token'], credentials: true }));
 app.use('/api/user', user);
 app.use('/api/auth', authentication);
 app.use((ex, req, res) => {
