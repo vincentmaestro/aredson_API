@@ -176,7 +176,7 @@ export default async function(recipient, name) {
                         <p>You received this mail to notify that your account registration has been approved and you can now proceed to enjoy our services.</p>
                         <br>
                         <p>Follow the link below to complete registration and log into your account</p>
-                        <a class="proceed" href="https://aredson.vercel.app/completeregistration?user=${recipient}">Complete Registration</a>
+                        <a class="proceed" href="https://aredson.com/completeregistration?user=${recipient}">Complete Registration</a>
                         <br>
                         <br>
                         <p>Reachout to us for any issues or enquiries at</p>
