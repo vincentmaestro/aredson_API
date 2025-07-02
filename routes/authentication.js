@@ -11,10 +11,12 @@ authentication.post('/', async (req, res) => {
     if(error) return res.status(400).send({ message: error.details[0].message });
 
     const emailPattern = /^\w+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,4}(\.[a-zA-Z]{2,4})?$/;
-    const emailAuth = emailPattern.test(req.body.user);
+    const emailChecks = emailPattern.test(req.body.user);
 
+    let user = emailChecks ? 
+    await User.findOne({ email: req.body.user }) : 
+    await User.findOne({ username: req.body.user });
 
-    let user = emailAuth ? await User.findOne({ email: req.body.user }) : await User.findOne({ username: req.body.user });
     if(!user) return res.status(400).send({ message: 'Incorrect credentials' });
 
     if(user.isDisabled || !user.password) return res.status(403).send({ message: 'Pending Approval.'});

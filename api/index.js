@@ -12,7 +12,7 @@ connectToDb();
 
 app.get("/", (req, res) => res.send("\\{^_^}/ hi!"));
 
-const whitelist = ['http://localhost:5173', 'https://aredson.com'];
+const whitelist = ['http://localhost:5173', 'https://aredson.vercel.app', 'https://aredson.com'];
 function validateOrigin(origin, callback) {
     if(whitelist.indexOf(origin) !== -1) {
         callback(null, true);
@@ -22,8 +22,9 @@ function validateOrigin(origin, callback) {
     }
 }
 
-app.use(cors({ origin: validateOrigin, allowedHeaders: ['Content-Type', 'x-auth-token'], exposedHeaders: ['x-auth-token'], credentials: true }));
+app.use(cors({ origin: 'https://aredson.com', allowedHeaders: ['Content-Type', 'x-auth-token'], exposedHeaders: ['x-auth-token'], credentials: true }));
 app.use(express.json());
+app.use(express.static('public'));
 app.use(cookieParser());
 app.use('/api/user', user);
 app.use('/api/auth', authentication);
